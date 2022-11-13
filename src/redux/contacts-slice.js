@@ -1,14 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchContacts, addContact, deleteContact } from './contacts-operation';
 
-// const initialState = {
-//   contacts: {
-//     items: [],
-//     isLoading: false,
-//     error: null
-//   },
-//   filter: "",
-// }
 
 export const contactsSlice = createSlice({
   name: 'contacts',
@@ -25,7 +17,6 @@ export const contactsSlice = createSlice({
     [fetchContacts.fulfilled]: (store, { payload }) => {
       store.isLoading = false;
       store.items = payload;
-      console.log(payload);
     },
     [fetchContacts.rejected]: (store, { payload }) => {
       store.isLoading = true;
@@ -70,7 +61,7 @@ export default contactsSlice.reducer;
 
 export const { changeFilter } = filterSlice.actions;
 
-
+//Оставлю как пример для локалсториджа
 
 // const contactsSlice = createSlice({
 //   name: 'contacts',

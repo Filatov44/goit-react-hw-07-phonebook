@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import {  useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // import { addContact, getContacts } from 'redux/contacts-slice';
-// import { getContacts } from 'redux/contacts-selector';
+import { getContacts } from 'redux/contacts-selector';
 import { addContact } from 'redux/contacts-operation';
 
 import { nanoid } from 'nanoid';
@@ -23,7 +23,7 @@ export default function ContactForm() {
   // Получаем ссылку на функцию отправки экшенов
   const dispatch = useDispatch();
   // вытягиваем массив контактов из store
-  // const contacts = useSelector(getContacts);
+  const contacts = useSelector(getContacts);
 
   const resetForm = () => {
     setName('');
@@ -33,6 +33,26 @@ export default function ContactForm() {
   const handleSubmit = e => {
     e.preventDefault();
     const id = nanoid();
+    //Проверяем на дубликат
+    const isDuplicateName = contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    const isDuplicateNumber = contacts.find(
+      contact => contact.number.toLowerCase() === number.toLowerCase()
+    );
+
+    if (isDuplicateName) {
+      resetForm();
+      return toast.info(
+        `Контакт с именем ${name} уже находится в телефонной книге`
+      );
+    }
+
+    if (isDuplicateNumber) {
+      resetForm();
+      return toast.info(`${number} уже записан в телефонной книге`);
+    }
 
     //отправляем экшен со значением фильтра в store
     dispatch(addContact({ name, number, id }));

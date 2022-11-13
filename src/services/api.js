@@ -6,7 +6,6 @@ const intanceContact = axios.create({
 
 export const fetchContacts = async () => {
     const { data } = await intanceContact.get('/');
-    console.log(data);
     return data;
 };
 

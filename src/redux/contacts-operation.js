@@ -1,17 +1,6 @@
 import * as api from 'services/api';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-const isDublicate = ({ name, number }, contacts) => {
-    const result = contacts.find(item => {
-        return (
-          name.toLowerCase() === item.name.toLowerCase() &&
-          number.toLowerCase() === item.number.toLowerCase()
-        );
-    })
-    return Boolean(result)
-}
 
 export const fetchContacts = createAsyncThunk(
     'contacts/All',
@@ -34,17 +23,7 @@ export const addContact = createAsyncThunk(
     } catch (error) {
       return thunkApi.rejectWithValue(error);
     }
-    },
-    {
-        condition: (data, { getState }) => {
-    const { contacts } = getState();
-    if (isDublicate(data, contacts.items)) {
-        return toast.info(
-        `Контакт с именем ${data.name} или с ${data.number} уже находится в телефонной книге`
-      );
     }
-      }
-  }
 );
 
 export const deleteContact = createAsyncThunk(

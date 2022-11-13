@@ -27,7 +27,7 @@ import { getState } from 'redux/contacts-selector';
 export default function Phonebook() {
   const { loading, error } = useSelector(getState);
   const contacts = useSelector(getContacts);
-  console.log(contacts);
+  // console.log(contacts);
   // const length = contacts.length;
 
   const dispatch = useDispatch();
